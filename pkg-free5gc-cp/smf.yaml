@@ -1,0 +1,220 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: smf-config
+  namespace: free5gc # kpt-set: ${namespace}
+  labels:
+    app: smf
+    app.kubernetes.io/part-of: free5gc-cp
+data:
+  smfcfg.yaml: |
+    info:
+      version: 1.0.7
+      description: SMF initial local configuration
+
+    configuration:
+      smfName: SMF
+      sbi:
+        scheme: https
+        registerIPv4: smf-service
+        bindingIPv4: 0.0.0.0
+        port: 8000
+        tls:
+          key: config/TLS/smf.key
+          pem: config/TLS/smf.pem
+      serviceNameList:
+        - nsmf-pdusession
+        - nsmf-event-exposure
+        - nsmf-oam
+      snssaiInfos:
+        - sNssai:
+            sst: 1        # kpt-set: ${sst}
+            sd: "010203"  # kpt-set: ${sd}
+          dnnInfos:
+            - dnn: internet # kpt-set: ${dnn}
+              dns:
+                ipv4: 8.8.8.8 # kpt-set: ${ue-dns}
+              ueSubnets:
+                - 10.1.0.0/16 # kpt-set: ${ue-subnet}
+      nrfUri: https://nrf-service:8000 # kpt-set: ${nrf-service-name}
+      pfcp:
+        listenAddr: 0.0.0.0
+        externalAddr: 0.0.0.0
+        nodeID: 0.0.0.0
+        retransTimeout: 1
+        maxRetrans: 3
+      userplaneInformation:
+        upNodes:
+          gNB:
+            type: AN
+          UPF:
+            type: UPF
+            nodeID: 192.168.101.20 # kpt-set: ${upf-n4-ip}
+            addr: 192.168.101.20   # kpt-set: ${upf-n4-ip}
+            sNssaiUpfInfos:
+              - sNssai:
+                  sst: 1        # kpt-set: ${sst}
+                  sd: "010203"
+                dnnUpfInfoList:
+                  - dnn: internet # kpt-set: ${dnn}
+                    pools:
+                      - cidr: 10.1.0.0/16 # kpt-set: ${ue-subnet}
+            interfaces:
+              - interfaceType: N3
+                endpoints:
+                  - 192.168.100.20
+                networkInstance: internet # kpt-set: ${dnn}
+        links:
+          - A: gNB
+            B: UPF
+      locality: area1
+      t3591Value: 16
+      t3592Value: 16
+
+    logger:
+      enable: true
+      level: info
+      reportCaller: false
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: uerouting-config
+  namespace: free5gc # kpt-set: ${namespace}
+  labels:
+    app: smf
+    app.kubernetes.io/part-of: free5gc-cp
+data:
+  uerouting.yaml: |
+    info:
+      version: 1.0.2
+      description: UE routing initial local configuration
+
+    userplaneInformation:
+      upNodes:
+        gNB:
+          type: AN
+        UPF:
+          type: UPF
+          nodeID: 192.168.101.20 # kpt-set: ${upf-n4-ip}
+          addr: 192.168.101.20   # kpt-set: ${upf-n4-ip}
+          sNssaiUpfInfos:
+            - sNssai:
+                sst: 1        # kpt-set: ${sst}
+                sd: "010203"
+              dnnUpfInfoList:
+                - dnn: internet # kpt-set: ${dnn}
+                  pools:
+                    - cidr: 10.1.0.0/16 # kpt-set: ${ue-subnet}
+          interfaces:
+            - interfaceType: N3
+              endpoints:
+                - 192.168.100.20
+              networkInstance: internet # kpt-set: ${dnn}
+      links:
+        - A: gNB
+          B: UPF
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: smf
+  namespace: free5gc # kpt-set: ${namespace}
+  labels:
+    app: smf
+    app.kubernetes.io/part-of: free5gc-cp
+    app.kubernetes.io/version: v3.4.3
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: smf
+  template:
+    metadata:
+      labels:
+        app: smf
+    spec:
+      initContainers:
+      - name: wait-nrf
+        image: busybox:1.35
+        command: ['sh', '-c', 'until nc -z nrf-service 8000; do echo waiting for nrf; sleep 2; done']
+      - name: wait-amf
+        image: busybox:1.35
+        command: ['sh', '-c', 'until nc -z amf-service 8000; do echo waiting for amf; sleep 2; done']
+      containers:
+      - name: smf
+        image: free5gc/smf:v3.4.3 # kpt-set: ${image-smf}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: sbi
+          containerPort: 8000
+          protocol: TCP
+        - name: pfcp
+          containerPort: 8805
+          protocol: UDP
+        command: ["./smf"]
+        args: ["-c", "/free5gc/config/smfcfg.yaml", "-u", "/free5gc/config/uerouting.yaml"]
+        # SMF uses pod IP for N4/PFCP — no Multus NAD required.
+        # The pfcp.externalAddr is set via downward API so UPF can reach back.
+        env:
+        - name: POD_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
+        resources:
+          requests:
+            cpu: 200m
+            memory: 128Mi
+          limits:
+            cpu: 1000m
+            memory: 512Mi
+        readinessProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        livenessProbe:
+          tcpSocket:
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 20
+          timeoutSeconds: 5
+          failureThreshold: 3
+        volumeMounts:
+        - name: smf-config
+          mountPath: /free5gc/config/smfcfg.yaml
+          subPath: smfcfg.yaml
+        - name: uerouting-config
+          mountPath: /free5gc/config/uerouting.yaml
+          subPath: uerouting.yaml
+      volumes:
+      - name: smf-config
+        configMap:
+          name: smf-config
+      - name: uerouting-config
+        configMap:
+          name: uerouting-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: smf-service
+  namespace: free5gc # kpt-set: ${namespace}
+  labels:
+    app: smf
+    app.kubernetes.io/part-of: free5gc-cp
+spec:
+  selector:
+    app: smf
+  type: ClusterIP
+  ports:
+  - name: sbi
+    port: 8000
+    targetPort: 8000
+    protocol: TCP
+  - name: pfcp
+    port: 8805
+    targetPort: 8805
+    protocol: UDP

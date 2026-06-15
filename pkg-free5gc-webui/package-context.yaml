@@ -1,0 +1,12 @@
+apiVersion: config.porch.kpt.dev/v1alpha1
+kind: PackageContext
+metadata:
+  name: package-context
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  # Package context for free5gc-webui
+  # Deployed on regional cluster alongside free5GC Control Plane
+  repository: free5gc-workload
+  package: pkg-free5gc-webui
+  revision: v1

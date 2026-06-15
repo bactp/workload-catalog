@@ -1,0 +1,29 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
+data:
+  namespace: free5gc
+  gnb-n2-ip: 192.168.100.30
+  gnb-n2-subnet: "24"
+  gnb-n2-gateway: 192.168.100.1
+  gnb-n3-ip: 192.168.100.31
+  gnb-n3-subnet: "24"
+  gnb-n3-gateway: 192.168.100.1
+  gnb-nad-master: ens3
+  amf-n2-ip: 192.168.100.10
+  upf-n3-ip: 192.168.100.20
+  plmn-mcc: "001"
+  plmn-mnc: "01"
+  tac: "1"
+  sst: "1"
+  sd: ffffff
+  dnn: internet
+  ue-imsi: imsi-001010000000001
+  ue-key: 8baf473f2f8fd09487cccbd7097c6862
+  ue-opc: 8e27b6af0e692e750f32667a3b14605d
+  ue-apn: internet
+  gnb-id: "0x000001"
+  image-ueransim: towards5gs/ueransim:v3.2.6
