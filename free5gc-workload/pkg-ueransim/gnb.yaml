@@ -43,8 +43,8 @@ spec:
       nodeName: ip-192-168-1-60.ap-northeast-2.compute.internal # kpt-set: ${edge-worker-node}
       containers:
         - name: gnb
-          image: towards5gs/ueransim:v3.2.6 # kpt-set: ${image-ueransim}
-          command: ["/ueransim/build/nr-gnb", "-c", "/ueransim/config/gnb.yaml"]
+          image: free5gc/ueransim:v3.4.3 # kpt-set: ${image-ueransim}
+          command: ["/ueransim/nr-gnb", "-c", "/ueransim/config/gnb.yaml"]
           securityContext:
             capabilities:
               add:

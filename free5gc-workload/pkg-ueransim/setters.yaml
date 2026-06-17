@@ -32,4 +32,4 @@ data:
   gnb-id: "0x000001"
   # Worker node name to schedule gNB/UE on edge worker
   edge-worker-node: ip-192-168-1-60.ap-northeast-2.compute.internal
-  image-ueransim: towards5gs/ueransim:v3.2.6
+  image-ueransim: free5gc/ueransim:v3.4.3

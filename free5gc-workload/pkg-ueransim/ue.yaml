@@ -81,8 +81,8 @@ spec:
               echo "gNB is ready"
       containers:
         - name: ue
-          image: towards5gs/ueransim:v3.2.6 # kpt-set: ${image-ueransim}
-          command: ["/ueransim/build/nr-ue", "-c", "/ueransim/config/ue.yaml"]
+          image: free5gc/ueransim:v3.4.3 # kpt-set: ${image-ueransim}
+          command: ["/ueransim/nr-ue", "-c", "/ueransim/config/ue.yaml"]
           securityContext:
             privileged: true
             capabilities:
