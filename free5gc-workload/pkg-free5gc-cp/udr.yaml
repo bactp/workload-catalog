@@ -9,9 +9,6 @@ data:
       version: 1.1.0
       description: UDR initial local configuration
     configuration:
-      dbConnectorType: mongodb
-      MongoDBName: free5gc
-      MongoDBUrl: mongodb://mongodb:27017 # kpt-set: ${mongodb-uri}
       sbi:
         scheme: https
         registerIPv4: udr-service
@@ -20,6 +17,10 @@ data:
         tls:
           key: config/TLS/udr.key
           pem: config/TLS/udr.pem
+      dbConnectorType: mongodb
+      mongodb:
+        name: free5gc
+        url: mongodb://mongodb:27017
       nrfUri: https://nrf-service:8000 # kpt-set: ${nrf-service-name}
       serviceNameList:
         - nudr-dr

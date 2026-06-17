@@ -27,7 +27,7 @@ data:
         - namf-mt
         - namf-loc
         - namf-oam
-      servedGumais:
+      servedGuamiList:
         - plmnId:
             mcc: "001" # kpt-set: ${plmn-mcc}
             mnc: "01"  # kpt-set: ${plmn-mnc}

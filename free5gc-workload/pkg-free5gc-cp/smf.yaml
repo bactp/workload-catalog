@@ -68,8 +68,14 @@ data:
           - A: gNB
             B: UPF
       locality: area1
-      t3591Value: 16
-      t3592Value: 16
+      t3591:
+        enable: true
+        expireTime: 16s
+        maxRetryTimes: 3
+      t3592:
+        enable: true
+        expireTime: 16s
+        maxRetryTimes: 3
 
     logger:
       enable: true
@@ -87,7 +93,7 @@ metadata:
 data:
   uerouting.yaml: |
     info:
-      version: 1.0.2
+      version: 1.0.7
       description: UE routing initial local configuration
 
     userplaneInformation:
