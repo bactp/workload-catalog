@@ -6,7 +6,7 @@ metadata:
 data:
   ausfcfg.yaml: |
     info:
-      version: 1.0.2
+      version: 1.0.3
       description: AUSF initial local configuration
     configuration:
       sbi:
