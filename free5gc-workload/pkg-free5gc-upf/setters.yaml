@@ -6,16 +6,20 @@ metadata:
     config.kubernetes.io/local-config: "true"
 data:
   namespace: free5gc
-  upf-n3-ip: 192.168.100.20
+  # All UPF IPs are secondary private IPs on edge worker ENI (192.168.1.0/24)
+  # Register in AWS console: EC2 → Instances → edge worker → Networking → Manage IP addresses
+  upf-n3-ip: 192.168.1.201
   upf-n3-subnet: "24"
-  upf-n3-gateway: 192.168.100.1
-  upf-n4-ip: 192.168.101.20
+  upf-n3-gateway: 192.168.1.1
+  upf-n4-ip: 192.168.1.202
   upf-n4-subnet: "24"
-  upf-n4-gateway: 192.168.101.1
-  upf-n6-ip: 192.168.200.10
+  upf-n4-gateway: 192.168.1.1
+  upf-n6-ip: 192.168.1.203
   upf-n6-subnet: "24"
-  upf-n6-gateway: 192.168.200.1
-  upf-nad-master: ens3
+  upf-n6-gateway: 192.168.1.1
+  upf-nad-master: ens5
   ue-subnet: 10.1.0.0/16
   dnn: internet
+  # Worker node name to schedule UPF on edge worker
+  edge-worker-node: ip-192-168-1-60.ap-northeast-2.compute.internal
   image-upf: free5gc/upf:v3.4.3

@@ -8,18 +8,28 @@ data:
   # Namespace
   namespace: free5gc
 
-  # AMF N2 Interface (NGAP over Multus macvlan on ens3)
-  amf-n2-ip: 192.168.100.10
+  # AMF N2 Interface (NGAP over Multus ipvlan on ens5)
+  # Requires secondary private IP 192.168.1.200 registered on core worker ENI in AWS console
+  amf-n2-ip: 192.168.1.200
   amf-n2-subnet: "24"
-  amf-n2-gateway: 192.168.100.1
-  amf-n2-nad-master: ens3
+  amf-n2-gateway: 192.168.1.1
+  amf-n2-nad-master: ens5
   amf-port: "38412"
 
-  # UPF N4 Interface (PFCP — SMF reaches UPF via pod IP or routed N4 subnet)
-  upf-n4-ip: 192.168.101.20
+  # UPF interface IPs (ipvlan on edge worker, secondary IPs registered in AWS)
+  upf-n4-ip: 192.168.1.202
+  upf-n3-ip: 192.168.1.201
+
+  # SMF N4 source IP — core worker node IP (pod uses hostNetwork)
+  smf-n4-ip: 192.168.1.176
+
+  # Worker node names for scheduling NF pods on worker (not control-plane)
+  core-worker-node: ip-192-168-1-176.ap-northeast-2.compute.internal
+  edge-worker-node: ip-192-168-1-60.ap-northeast-2.compute.internal
 
   # Core services
   nrf-service-name: nrf-service
+  nrf-uri: https://nrf-service:8000
   mongodb-uri: mongodb://mongodb:27017
 
   # PLMN / Cell identity
@@ -27,9 +37,9 @@ data:
   plmn-mnc: "01"
   tac: "1"
 
-  # Slice & DNN
+  # Slice & DNN — consistent hex without 0x prefix across all NFs
   sst: "1"
-  sd: ffffff
+  sd: "010203"
   dnn: internet
 
   # UE IP pool
@@ -39,7 +49,7 @@ data:
   # AMF identity
   amf-id: cafe00
 
-  # Container images (full path so apply-setters replaces the entire field value)
+  # Container images
   image-nrf: free5gc/nrf:v3.4.3
   image-udr: free5gc/udr:v3.4.3
   image-udm: free5gc/udm:v3.4.3
@@ -47,5 +57,5 @@ data:
   image-amf: free5gc/amf:v3.4.3
   image-smf: free5gc/smf:v3.4.3
 
-  # PVC storage class for MongoDB
-  storage-class: standard
+  # PVC storage class (Longhorn is default on both clusters)
+  storage-class: longhorn

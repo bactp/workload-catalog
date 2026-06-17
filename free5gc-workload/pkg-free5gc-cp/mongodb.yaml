@@ -34,7 +34,7 @@ spec:
       name: data
     spec:
       accessModes: [ReadWriteOnce]
-      storageClassName: standard # kpt-set: ${storage-class}
+      storageClassName: longhorn # kpt-set: ${storage-class}
       resources:
         requests:
           storage: 10Gi

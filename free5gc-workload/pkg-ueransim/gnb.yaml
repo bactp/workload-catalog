@@ -10,14 +10,15 @@ data:
     nci: '0x000000010'
     idLength: 32
     tac: 1  # kpt-set: ${tac}
-    linkIp: 192.168.100.30  # kpt-set: ${gnb-n2-ip}
-    ngapIp: 192.168.100.30  # kpt-set: ${gnb-n2-ip}
-    gtpIp: 192.168.100.31   # kpt-set: ${gnb-n3-ip}
+    linkIp: 192.168.1.204  # kpt-set: ${gnb-n2-ip}
+    ngapIp: 192.168.1.204  # kpt-set: ${gnb-n2-ip}
+    gtpIp: 192.168.1.205   # kpt-set: ${gnb-n3-ip}
     amfConfigs:
-      - address: 192.168.100.10  # kpt-set: ${amf-n2-ip}
+      - address: 192.168.1.200  # kpt-set: ${amf-n2-ip}
         port: 38412
     slices:
       - sst: 0x01
+        sd: 0x010203
     ignoreStreamIds: true
 ---
 apiVersion: apps/v1
@@ -39,6 +40,7 @@ spec:
       annotations:
         k8s.v1.cni.cncf.io/networks: free5gc-gnb-n2, free5gc-gnb-n3
     spec:
+      nodeName: ip-192-168-1-60.ap-northeast-2.compute.internal # kpt-set: ${edge-worker-node}
       containers:
         - name: gnb
           image: towards5gs/ueransim:v3.2.6 # kpt-set: ${image-ueransim}
@@ -67,7 +69,7 @@ spec:
   selector:
     app: gnb
   ports:
-    - name: gnb-port
-      protocol: UDP
-      port: 4997
-      targetPort: 4997
+    - name: gnb-sctp
+      protocol: SCTP
+      port: 38412
+      targetPort: 38412

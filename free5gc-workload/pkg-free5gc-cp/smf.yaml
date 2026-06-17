@@ -36,11 +36,11 @@ data:
                 ipv4: 8.8.8.8 # kpt-set: ${ue-dns}
               ueSubnets:
                 - 10.1.0.0/16 # kpt-set: ${ue-subnet}
-      nrfUri: https://nrf-service:8000 # kpt-set: ${nrf-service-name}
+      nrfUri: https://nrf-service:8000 # kpt-set: ${nrf-uri}
       pfcp:
         listenAddr: 0.0.0.0
-        externalAddr: 0.0.0.0
-        nodeID: 0.0.0.0
+        externalAddr: 192.168.1.176 # kpt-set: ${smf-n4-ip}
+        nodeID: 192.168.1.176       # kpt-set: ${smf-n4-ip}
         retransTimeout: 1
         maxRetrans: 3
       userplaneInformation:
@@ -49,12 +49,12 @@ data:
             type: AN
           UPF:
             type: UPF
-            nodeID: 192.168.101.20 # kpt-set: ${upf-n4-ip}
-            addr: 192.168.101.20   # kpt-set: ${upf-n4-ip}
+            nodeID: 192.168.1.202 # kpt-set: ${upf-n4-ip}
+            addr: 192.168.1.202   # kpt-set: ${upf-n4-ip}
             sNssaiUpfInfos:
               - sNssai:
-                  sst: 1        # kpt-set: ${sst}
-                  sd: "010203"
+                  sst: 1          # kpt-set: ${sst}
+                  sd: "010203"    # kpt-set: ${sd}
                 dnnUpfInfoList:
                   - dnn: internet # kpt-set: ${dnn}
                     pools:
@@ -62,7 +62,7 @@ data:
             interfaces:
               - interfaceType: N3
                 endpoints:
-                  - 192.168.100.20
+                  - 192.168.1.201 # kpt-set: ${upf-n3-ip}
                 networkInstance: internet # kpt-set: ${dnn}
         links:
           - A: gNB
@@ -96,12 +96,12 @@ data:
           type: AN
         UPF:
           type: UPF
-          nodeID: 192.168.101.20 # kpt-set: ${upf-n4-ip}
-          addr: 192.168.101.20   # kpt-set: ${upf-n4-ip}
+          nodeID: 192.168.1.202 # kpt-set: ${upf-n4-ip}
+          addr: 192.168.1.202   # kpt-set: ${upf-n4-ip}
           sNssaiUpfInfos:
             - sNssai:
-                sst: 1        # kpt-set: ${sst}
-                sd: "010203"
+                sst: 1          # kpt-set: ${sst}
+                sd: "010203"    # kpt-set: ${sd}
               dnnUpfInfoList:
                 - dnn: internet # kpt-set: ${dnn}
                   pools:
@@ -109,7 +109,7 @@ data:
           interfaces:
             - interfaceType: N3
               endpoints:
-                - 192.168.100.20
+                - 192.168.1.201 # kpt-set: ${upf-n3-ip}
               networkInstance: internet # kpt-set: ${dnn}
       links:
         - A: gNB
@@ -134,6 +134,9 @@ spec:
       labels:
         app: smf
     spec:
+      hostNetwork: true
+      dnsPolicy: ClusterFirstWithHostNet
+      nodeName: ip-192-168-1-176.ap-northeast-2.compute.internal # kpt-set: ${core-worker-node}
       initContainers:
       - name: wait-nrf
         image: busybox:1.35
@@ -154,13 +157,6 @@ spec:
           protocol: UDP
         command: ["./smf"]
         args: ["-c", "/free5gc/config/smfcfg.yaml", "-u", "/free5gc/config/uerouting.yaml"]
-        # SMF uses pod IP for N4/PFCP — no Multus NAD required.
-        # The pfcp.externalAddr is set via downward API so UPF can reach back.
-        env:
-        - name: POD_IP
-          valueFrom:
-            fieldRef:
-              fieldPath: status.podIP
         resources:
           requests:
             cpu: 200m

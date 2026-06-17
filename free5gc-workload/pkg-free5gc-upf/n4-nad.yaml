@@ -8,20 +8,20 @@ spec:
     {
       "cniVersion": "0.3.1",
       "name": "free5gc-upf-n4",
-      "type": "macvlan",
-      "master": "ens3",
-      "mode": "bridge",
+      "type": "ipvlan",
+      "master": "ens5",
+      "mode": "l2",
       "ipam": {
         "type": "static",
         "addresses": [
           {
-            "address": "192.168.101.20/24"
+            "address": "192.168.1.202/24"
           }
         ],
         "routes": [
           {
             "dst": "0.0.0.0/0",
-            "gw": "192.168.101.1"
+            "gw": "192.168.1.1"
           }
         ]
       }

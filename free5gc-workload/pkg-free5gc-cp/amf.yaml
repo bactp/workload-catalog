@@ -11,7 +11,7 @@ data:
     configuration:
       amfName: AMF
       ngapIpList:
-        - 192.168.100.10 # kpt-set: ${amf-n2-ip}
+        - 192.168.1.200 # kpt-set: ${amf-n2-ip}
       ngapPort: 38412
       sbi:
         scheme: https
@@ -43,7 +43,7 @@ data:
             mnc: "01"  # kpt-set: ${plmn-mnc}
           snssaiList:
             - sst: 1   # kpt-set: ${sst}
-              sd: ffffff # kpt-set: ${sd}
+              sd: "010203" # kpt-set: ${sd}
       supportDnnList:
         - internet # kpt-set: ${dnn}
       nrfUri: https://nrf-service:8000
@@ -84,6 +84,7 @@ spec:
       annotations:
         k8s.v1.cni.cncf.io/networks: free5gc-amf-n2
     spec:
+      nodeName: ip-192-168-1-176.ap-northeast-2.compute.internal # kpt-set: ${core-worker-node}
       initContainers:
       - name: wait-nrf
         image: busybox:1.36
