@@ -26,6 +26,7 @@ data:
         - nnrf-nfm
         - nnrf-disc
     logger:
+      enable: true
       level: info
       reportCaller: false
 ---

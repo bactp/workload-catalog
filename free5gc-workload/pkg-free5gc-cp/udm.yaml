@@ -25,6 +25,7 @@ data:
           pem: config/TLS/udm.pem
       nrfUri: https://nrf-service:8000 # kpt-set: ${nrf-service-name}
     logger:
+      enable: true
       level: info
       reportCaller: false
 ---

@@ -25,6 +25,7 @@ data:
       serviceNameList:
         - nudr-dr
     logger:
+      enable: true
       level: info
       reportCaller: false
 ---

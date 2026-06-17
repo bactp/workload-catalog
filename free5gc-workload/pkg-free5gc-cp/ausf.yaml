@@ -25,6 +25,7 @@ data:
           mnc: "01"  # kpt-set: ${plmn-mnc}
       groupId: ausfGroup001
     logger:
+      enable: true
       level: info
       reportCaller: false
 ---

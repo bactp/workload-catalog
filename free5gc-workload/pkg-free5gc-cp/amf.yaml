@@ -64,6 +64,7 @@ data:
       t3512Value: 3600
       non3gppDeregistrationTimerValue: 3240
     logger:
+      enable: true
       level: info
       reportCaller: false
 ---
