@@ -46,7 +46,7 @@ spec:
       initContainers:
       - name: wait-udm
         image: busybox:1.36
-        command: ['sh', '-c', 'until nc -z udm-service 8000; do echo waiting for udm; sleep 2; done']
+        command: ['sh', '-c', 'until nc -zw3 udm-service.free5gc.svc.cluster.local 8000; do echo waiting for udm; sleep 2; done']
       containers:
       - name: ausf
         image: free5gc/ausf:v3.4.3 # kpt-set: ${image-ausf}

@@ -88,7 +88,7 @@ spec:
       initContainers:
       - name: wait-nrf
         image: busybox:1.36
-        command: ['sh', '-c', 'until nc -z nrf-service 8000; do echo waiting for nrf; sleep 2; done']
+        command: ['sh', '-c', 'until nc -zw3 nrf-service.free5gc.svc.cluster.local 8000; do echo waiting for nrf; sleep 2; done']
       containers:
       - name: amf
         image: free5gc/amf:v3.4.3 # kpt-set: ${image-amf}
