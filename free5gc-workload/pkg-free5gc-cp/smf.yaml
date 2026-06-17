@@ -38,11 +38,12 @@ data:
                 - 10.1.0.0/16 # kpt-set: ${ue-subnet}
       nrfUri: https://nrf-service:8000 # kpt-set: ${nrf-uri}
       pfcp:
-        listenAddr: 0.0.0.0
+        listenAddr: 192.168.1.176   # kpt-set: ${smf-n4-ip}
         externalAddr: 192.168.1.176 # kpt-set: ${smf-n4-ip}
         nodeID: 192.168.1.176       # kpt-set: ${smf-n4-ip}
-        retransTimeout: 1
-        maxRetrans: 3
+        assocFailAlertInterval: 10s
+        assocFailRetryInterval: 30s
+        heartbeatInterval: 10s
       userplaneInformation:
         upNodes:
           gNB:
