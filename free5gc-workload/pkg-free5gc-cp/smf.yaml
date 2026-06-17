@@ -20,8 +20,8 @@ data:
         bindingIPv4: 0.0.0.0
         port: 8000
         tls:
-          key: config/TLS/smf.key
-          pem: config/TLS/smf.pem
+          key: cert/smf.key
+          pem: cert/smf.pem
       serviceNameList:
         - nsmf-pdusession
         - nsmf-event-exposure

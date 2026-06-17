@@ -15,8 +15,8 @@ data:
         bindingIPv4: 0.0.0.0
         port: 8000
         tls:
-          key: config/TLS/ausf.key
-          pem: config/TLS/ausf.pem
+          key: cert/ausf.key
+          pem: cert/ausf.pem
       serviceNameList:
         - nausf-auth
       nrfUri: https://nrf-service:8000 # kpt-set: ${nrf-service-name}

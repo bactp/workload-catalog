@@ -21,8 +21,8 @@ data:
         bindingIPv4: 0.0.0.0
         port: 8000
         tls:
-          key: config/TLS/udm.key
-          pem: config/TLS/udm.pem
+          key: cert/udm.key
+          pem: cert/udm.pem
       nrfUri: https://nrf-service:8000 # kpt-set: ${nrf-service-name}
     logger:
       enable: true

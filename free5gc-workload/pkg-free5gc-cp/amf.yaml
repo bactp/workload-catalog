@@ -19,8 +19,8 @@ data:
         bindingIPv4: 0.0.0.0
         port: 8000
         tls:
-          key: config/TLS/amf.key
-          pem: config/TLS/amf.pem
+          key: cert/amf.key
+          pem: cert/amf.pem
       serviceNameList:
         - namf-comm
         - namf-evts
