@@ -36,7 +36,7 @@ data:
         - plmnId:
             mcc: "001" # kpt-set: ${plmn-mcc}
             mnc: "01"  # kpt-set: ${plmn-mnc}
-          tac: 1 # kpt-set: ${tac}
+          tac: "000001" # kpt-set: ${tac}
       plmnSupportList:
         - plmnId:
             mcc: "001" # kpt-set: ${plmn-mcc}
