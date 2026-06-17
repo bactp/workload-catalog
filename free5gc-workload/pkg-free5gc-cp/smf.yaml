@@ -63,7 +63,8 @@ data:
               - interfaceType: N3
                 endpoints:
                   - 192.168.1.201 # kpt-set: ${upf-n3-ip}
-                networkInstance: internet # kpt-set: ${dnn}
+                networkInstances:
+                  - internet # kpt-set: ${dnn}
         links:
           - A: gNB
             B: UPF
@@ -116,7 +117,8 @@ data:
             - interfaceType: N3
               endpoints:
                 - 192.168.1.201 # kpt-set: ${upf-n3-ip}
-              networkInstance: internet # kpt-set: ${dnn}
+              networkInstances:
+                - internet # kpt-set: ${dnn}
       links:
         - A: gNB
           B: UPF
