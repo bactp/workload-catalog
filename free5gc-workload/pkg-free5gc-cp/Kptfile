@@ -7,10 +7,3 @@ metadata:
 info:
   description: free5GC Control Plane package (NRF+UDR+UDM+AUSF+AMF+SMF+MongoDB) for regional cluster
   readinessGates: []
-pipeline:
-  mutators:
-  - image: gcr.io/kpt-fn/apply-setters:v0.2
-    configPath: setters.yaml
-  - image: gcr.io/kpt-fn/set-namespace:v0.4.1
-    configMap:
-      namespace: free5gc

@@ -6,10 +6,3 @@ metadata:
     config.kubernetes.io/local-config: "true"
 info:
   description: free5GC UPF kpt package for edge cluster deployment
-pipeline:
-  mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.2
-      configPath: setters.yaml
-    - image: gcr.io/kpt-fn/set-namespace:v0.4.1
-      configMap:
-        namespace: free5gc

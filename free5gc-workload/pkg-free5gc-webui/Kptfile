@@ -6,10 +6,3 @@ metadata:
     config.kubernetes.io/local-config: "true"
 info:
   description: free5GC WebUI package for regional cluster deployment alongside Control Plane
-pipeline:
-  mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.2
-      configPath: setters.yaml
-    - image: gcr.io/kpt-fn/set-namespace:v0.4.1
-      configMap:
-        namespace: free5gc
