@@ -9,7 +9,7 @@ data:
       version: 1.0.2
       description: NRF initial local configuration
     configuration:
-      DbConnectorType: mongodb
+      dbConnectorType: mongodb
       MongoDBName: free5gc
       MongoDBUrl: mongodb://mongodb:27017 # kpt-set: ${mongodb-uri}
       sbi:
