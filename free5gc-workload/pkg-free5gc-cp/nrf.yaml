@@ -6,7 +6,7 @@ metadata:
 data:
   nrfcfg.yaml: |
     info:
-      version: 1.0.3
+      version: 1.0.2
       description: NRF initial local configuration
     configuration:
       MongoDBName: free5gc

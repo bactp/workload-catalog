@@ -6,7 +6,7 @@ metadata:
 data:
   udmcfg.yaml: |
     info:
-      version: 1.0.3
+      version: 1.0.2
       description: UDM initial local configuration
     configuration:
       serviceNameList:
