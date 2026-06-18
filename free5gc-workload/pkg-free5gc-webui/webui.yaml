@@ -54,6 +54,7 @@ spec:
           image: free5gc/webui:v3.4.3 # kpt-set: ${image-webui}
           imagePullPolicy: IfNotPresent
           workingDir: /free5gc
+          command: ["/free5gc/webui"]
           env:
             - name: DB_URI
               value: mongodb://mongodb:27017 # kpt-set: ${mongodb-uri}
