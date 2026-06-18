@@ -19,7 +19,7 @@ data:
   upf-n4-ip: 192.168.11.202
   upf-n3-ip: 192.168.12.201
 
-  # SMF N4 source IP — core worker node IP on N4 subnet (pod uses hostNetwork, binds to ens7)
+  # SMF N4 IP — assigned via Multus NAD on ens7 (core-n4 subnet 192.168.11.0/24)
   smf-n4-ip: 192.168.11.176
 
   # Worker node names for scheduling NF pods

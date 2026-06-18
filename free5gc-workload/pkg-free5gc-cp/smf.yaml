@@ -142,9 +142,9 @@ spec:
     metadata:
       labels:
         app: smf
+      annotations:
+        k8s.v1.cni.cncf.io/networks: free5gc-smf-n4
     spec:
-      hostNetwork: true
-      dnsPolicy: ClusterFirstWithHostNet
       nodeName: ip-192-168-1-176.ap-northeast-2.compute.internal # kpt-set: ${core-worker-node}
       initContainers:
       - name: wait-nrf
