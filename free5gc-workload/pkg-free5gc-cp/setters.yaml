@@ -55,6 +55,8 @@ data:
   image-ausf: free5gc/ausf:v3.4.3
   image-amf: free5gc/amf:v3.4.3
   image-smf: free5gc/smf:v3.4.3
+  image-pcf: free5gc/pcf:v3.4.3
+  image-nssf: free5gc/nssf:v3.4.3
 
   # PVC storage class
   storage-class: longhorn
