@@ -6,19 +6,18 @@ metadata:
     config.kubernetes.io/local-config: "true"
 data:
   namespace: free5gc
-  # gNB IPs are secondary private IPs on edge worker ENI (192.168.1.0/24)
-  # Register in AWS console: 192.168.1.204 (N2) and 192.168.1.205 (N3)
-  gnb-n2-ip: 192.168.1.204
+  # gNB N2: edge-n2 subnet (192.168.10.0/24) on ens6
+  gnb-n2-ip: 192.168.10.204
   gnb-n2-subnet: "24"
-  gnb-n2-gateway: 192.168.1.1
-  gnb-n3-ip: 192.168.1.205
+  gnb-n2-gateway: 192.168.10.1
+  # gNB N3: edge-n3 subnet (192.168.12.0/24) on ens8
+  gnb-n3-ip: 192.168.12.205
   gnb-n3-subnet: "24"
-  gnb-n3-gateway: 192.168.1.1
-  gnb-nad-master: ens5
-  # AMF N2 IP on core worker (ipvlan secondary IP)
-  amf-n2-ip: 192.168.1.200
-  # UPF N3 IP on edge worker (ipvlan secondary IP)
-  upf-n3-ip: 192.168.1.201
+  gnb-n3-gateway: 192.168.12.1
+  # AMF N2 IP on core worker
+  amf-n2-ip: 192.168.10.200
+  # UPF N3 IP on edge worker
+  upf-n3-ip: 192.168.12.201
   plmn-mcc: "001"
   plmn-mnc: "01"
   tac: "1"
@@ -31,5 +30,5 @@ data:
   ue-apn: internet
   gnb-id: "0x000001"
   # Worker node name to schedule gNB/UE on edge worker
-  edge-worker-node: ip-192-168-1-60.ap-northeast-2.compute.internal
+  edge-worker-node: ip-192-168-1-57.ap-northeast-2.compute.internal
   image-ueransim: free5gc/ueransim:v3.4.3

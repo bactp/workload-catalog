@@ -14,7 +14,7 @@ data:
     amf: '8000'
     imeiSv: '0035609204079514'
     gnbSearchList:
-      - 192.168.1.204  # kpt-set: ${gnb-n2-ip}
+      - 192.168.10.204  # kpt-set: ${gnb-n2-ip}
     uacAic:
       mps: false
       mcs: false
@@ -66,7 +66,7 @@ spec:
       labels:
         app: ue
     spec:
-      nodeName: ip-192-168-1-60.ap-northeast-2.compute.internal # kpt-set: ${edge-worker-node}
+      nodeName: ip-192-168-1-57.ap-northeast-2.compute.internal # kpt-set: ${edge-worker-node}
       initContainers:
         - name: wait-for-gnb
           image: busybox:1.36
@@ -74,8 +74,8 @@ spec:
             - sh
             - -c
             - |
-              until nc -z 192.168.1.204 38412 2>/dev/null; do
-                echo "Waiting for gNB N2 (192.168.1.204:38412) to be ready..."
+              until ping -c 1 -W 2 192.168.10.204 >/dev/null 2>&1; do
+                echo "Waiting for gNB (192.168.10.204) to be reachable..."
                 sleep 3
               done
               echo "gNB is ready"

@@ -11,7 +11,7 @@ data:
     configuration:
       amfName: AMF
       ngapIpList:
-        - 192.168.1.200 # kpt-set: ${amf-n2-ip}
+        - 192.168.10.200 # kpt-set: ${amf-n2-ip}
       ngapPort: 38412
       sbi:
         scheme: https

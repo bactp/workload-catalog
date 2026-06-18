@@ -9,13 +9,14 @@ spec:
       "cniVersion": "0.3.1",
       "name": "free5gc-gnb-n3",
       "type": "ipvlan",
-      "master": "ens5",
+      "master": "ens8",
       "mode": "l2",
       "ipam": {
         "type": "static",
         "addresses": [
           {
-            "address": "192.168.1.205/24"
+            "address": "192.168.12.205/24",
+            "gateway": "192.168.12.1"
           }
         ]
       }

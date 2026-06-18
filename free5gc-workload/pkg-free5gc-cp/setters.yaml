@@ -8,24 +8,23 @@ data:
   # Namespace
   namespace: free5gc
 
-  # AMF N2 Interface (NGAP over Multus ipvlan on ens5)
-  # Requires secondary private IP 192.168.1.200 registered on core worker ENI in AWS console
-  amf-n2-ip: 192.168.1.200
+  # AMF N2 Interface (NGAP over Multus ipvlan on ens6 — core-n2 subnet)
+  amf-n2-ip: 192.168.10.200
   amf-n2-subnet: "24"
-  amf-n2-gateway: 192.168.1.1
-  amf-n2-nad-master: ens5
+  amf-n2-gateway: 192.168.10.1
+  amf-n2-nad-master: ens6
   amf-port: "38412"
 
-  # UPF interface IPs (ipvlan on edge worker, secondary IPs registered in AWS)
-  upf-n4-ip: 192.168.1.202
-  upf-n3-ip: 192.168.1.201
+  # UPF interface IPs (separate subnets on edge worker)
+  upf-n4-ip: 192.168.11.202
+  upf-n3-ip: 192.168.12.201
 
-  # SMF N4 source IP — core worker node IP (pod uses hostNetwork)
-  smf-n4-ip: 192.168.1.176
+  # SMF N4 source IP — core worker node IP on N4 subnet (pod uses hostNetwork, binds to ens7)
+  smf-n4-ip: 192.168.11.176
 
-  # Worker node names for scheduling NF pods on worker (not control-plane)
+  # Worker node names for scheduling NF pods
   core-worker-node: ip-192-168-1-176.ap-northeast-2.compute.internal
-  edge-worker-node: ip-192-168-1-60.ap-northeast-2.compute.internal
+  edge-worker-node: ip-192-168-1-57.ap-northeast-2.compute.internal
 
   # Core services
   nrf-service-name: nrf-service
@@ -37,7 +36,7 @@ data:
   plmn-mnc: "01"
   tac: "1"
 
-  # Slice & DNN — consistent hex without 0x prefix across all NFs
+  # Slice & DNN
   sst: "1"
   sd: "010203"
   dnn: internet
@@ -57,5 +56,5 @@ data:
   image-amf: free5gc/amf:v3.4.3
   image-smf: free5gc/smf:v3.4.3
 
-  # PVC storage class (Longhorn is default on both clusters)
+  # PVC storage class
   storage-class: longhorn
