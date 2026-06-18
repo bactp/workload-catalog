@@ -10,6 +10,7 @@ data:
     nci: '0x000000010'
     idLength: 32
     tac: 1  # kpt-set: ${tac}
+    cellBarred: false
     linkIp: 192.168.10.204  # kpt-set: ${gnb-n2-ip}
     ngapIp: 192.168.10.204  # kpt-set: ${gnb-n2-ip}
     gtpIp: 192.168.12.205   # kpt-set: ${gnb-n3-ip}
@@ -17,8 +18,8 @@ data:
       - address: 192.168.10.200  # kpt-set: ${amf-n2-ip}
         port: 38412
     slices:
-      - sst: 0x01
-        sd: 0x010203
+      - sst: 1
+        sd: '010203'
     ignoreStreamIds: true
 ---
 apiVersion: apps/v1
