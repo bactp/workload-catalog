@@ -8,5 +8,5 @@ info:
   description: UERANSIM gNB+UE simulator for free5GC
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.2
+    - image: ghcr.io/kptdev/krm-functions-catalog/apply-setters:v0.2
       configPath: setters.yaml
