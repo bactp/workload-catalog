@@ -6,3 +6,7 @@ metadata:
     config.kubernetes.io/local-config: "true"
 info:
   description: UERANSIM gNB+UE simulator for free5GC
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml

@@ -5,4 +5,8 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 info:
-  description: sample description
+  description: Knative Serving core + Kourier ingress for edge cluster
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml

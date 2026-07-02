@@ -626,6 +626,8 @@ metadata:
   annotations:
     config.kubernetes.io/depends-on: /namespaces/knative-serving
 spec:
+  externalIPs:
+    - 192.168.1.57 # kpt-set: ${edge-node-ip}
   ports:
     - name: http2
       port: 80
